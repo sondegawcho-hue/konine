@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEAM | KONINE</title>
+  <link rel="icon" type="image/jpeg" href="konine.jpg">
+  <link rel="apple-touch-icon" href="konine.jpg">
+  <meta name="description" content="KONINE — Team: Meet the visionaries behind the brand.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Cinzel:wght@400;600;700&family=Inter:wght@200;300;400&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070709;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-glow: rgba(201, 168, 76, 0.4);
+      --gold-dim: rgba(201, 168, 76, 0.12);
+      --border: rgba(255, 255, 255, 0.07);
+      --ease: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      background: var(--bg);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity 0.7s var(--ease);
+      overflow-x: hidden;
+    }
+
+    body.loaded {
+      opacity: 1;
+    }
+
+    /* ─── AMBIENT ─── */
+    .ambient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+    }
+
+    .orb-1 {
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.07), transparent 65%);
+      top: -20%;
+      left: -15%;
+      animation: driftA 20s ease-in-out infinite alternate;
+    }
+
+    .orb-2 {
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.05), transparent 65%);
+      bottom: -15%;
+      right: -10%;
+      animation: driftB 24s ease-in-out infinite alternate;
+    }
+
+    @keyframes driftA {
+      to {
+        transform: translate(5vw, 4vh) scale(1.1);
+      }
+    }
+
+    @keyframes driftB {
+      to {
+        transform: translate(-4vw, -3vh) scale(1.08);
+      }
+    }
+
+    .scan-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold-light) 50%, var(--gold) 70%, transparent);
+      opacity: 0;
+      z-index: 1000;
+      transition: opacity 2s ease 0.6s;
+    }
+
+    body.loaded .scan-line {
+      opacity: 0.65;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 500;
+      height: clamp(64px, 9vh, 96px);
+      padding: 0 clamp(24px, 5.5vw, 80px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(180deg, rgba(7, 7, 9, 0.88) 0%, rgba(7, 7, 9, 0) 100%);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    @media (min-width: 1400px) {
+      nav {
+        padding: 42px 90px;
+        height: 110px;
+      }
+    }
+
+    .logo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: clamp(35px, 5vh, 55px);
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px var(--gold-glow));
+      transition: filter 0.4s;
+    }
+
+    .logo:hover img {
+      filter: drop-shadow(0 0 18px var(--gold-glow)) brightness(1.2);
+    }
+
+    .logo-fallback {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.1rem, 2.2vw, 1.7rem);
+      letter-spacing: 6px;
+      color: var(--gold);
+      display: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: clamp(28px, 4vw, 56px);
+    }
+
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.6rem, 0.85vw, 0.75rem);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.4s;
+    }
+
+    @media (min-width: 1400px) {
+      .nav-links a {
+        font-size: 1.15rem;
+        letter-spacing: 6px;
+      }
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transition: width 0.7s var(--ease);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--gold-light);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 600;
+      background: none;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--gold);
+      transition: 0.5s var(--ease);
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+      background: var(--gold);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+      background: var(--gold);
+    }
+
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 7, 9, 0.97);
+      backdrop-filter: blur(24px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      z-index: 490;
+      transform: translateX(100%);
+      transition: transform 0.65s var(--ease);
+    }
+
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+
+    .mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(2rem, 7vw, 3.5rem);
+      letter-spacing: 8px;
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: color 0.3s, opacity 0.5s var(--ease), transform 0.5s var(--ease);
+    }
+
+    .mobile-menu.open a {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-menu a:hover {
+      color: var(--gold);
+    }
+
+    @media (max-width:768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* ─── BG WORD ─── */
+    .bg-word {
+      position: fixed;
+      z-index: 0;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(22vw, 30vw, 38vw);
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.022);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      white-space: nowrap;
+      user-select: none;
+      letter-spacing: 0.1em;
+      animation: bgBreath 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgBreath {
+      from {
+        transform: translate(-50%, -50%) scale(0.97);
+      }
+
+      to {
+        transform: translate(-50%, -50%) scale(1.03);
+        letter-spacing: 0.15em;
+      }
+    }
+
+    /* ─── MAIN ─── */
+    main {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+      padding-top: clamp(64px, 9vh, 96px);
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+      text-align: center;
+      padding: clamp(32px, 5vh, 64px) clamp(24px, 5vw, 60px) clamp(20px, 3vh, 40px);
+      opacity: 0;
+      transform: translateY(-14px);
+      animation: riseIn 1.3s var(--ease) 0.3s forwards;
+    }
+
+    .page-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.45rem, 1vw, 0.58rem);
+      letter-spacing: clamp(5px, 1.5vw, 12px);
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: .75;
+      margin-bottom: 10px;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(2rem, 6vw, 5rem);
+      letter-spacing: clamp(8px, 2.5vw, 28px);
+      text-transform: uppercase;
+      line-height: 1.05;
+      background: linear-gradient(120deg, #fff 0%, var(--gold-light) 35%, var(--gold) 50%, var(--gold-light) 70%, #fff 100%);
+      background-size: 250% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 7s linear 2s infinite;
+    }
+
+    .page-rule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .prule-line {
+      display: block;
+      height: 1px;
+      width: clamp(28px, 5vw, 80px);
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+
+    .prule-line.r {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .prule-dot {
+      color: var(--gold);
+      font-size: 0.45rem;
+    }
+
+    @keyframes riseIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shimmer {
+      to {
+        background-position: 250% center;
+      }
+    }
+
+    /* TEAM SECTION */
+    .team-section {
+      padding: 0 clamp(24px, 6vw, 80px) clamp(40px, 6vh, 80px);
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .ceo-row {
+      display: flex;
+      align-items: center;
+      gap: clamp(28px, 5vw, 72px);
+      margin-bottom: clamp(36px, 5vh, 72px);
+      opacity: 0;
+      transform: translateY(28px);
+      animation: riseIn 1.2s var(--ease) 0.5s forwards;
+    }
+
+    .mid-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(18px, 3.5vw, 48px);
+      margin-bottom: clamp(36px, 5vh, 72px);
+      opacity: 0;
+      transform: translateY(28px);
+      animation: riseIn 1.2s var(--ease) 0.75s forwards;
+    }
+
+    .bottom-row {
+      display: flex;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(28px);
+      animation: riseIn 1.2s var(--ease) 1.0s forwards;
+    }
+
+    .member-card {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: #090909;
+      cursor: pointer;
+      transition: transform .8s var(--ease), border-color .7s var(--ease), box-shadow .7s var(--ease);
+    }
+
+    .member-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(201, 168, 76, 0.45);
+      box-shadow: 0 40px 90px rgba(0, 0, 0, 0.9), 0 0 40px rgba(201, 168, 76, 0.1);
+    }
+
+    .member-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+      display: block;
+      transition: transform 1s var(--ease), filter 1s var(--ease);
+      filter: grayscale(20%) brightness(0.92);
+    }
+
+    .member-card:hover img {
+      transform: scale(1.05);
+      filter: grayscale(0) brightness(1.08) contrast(1.03);
+    }
+
+    .member-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: clamp(16px, 3vw, 30px);
+      background: linear-gradient(to top, rgba(7, 7, 9, 0.97) 0%, rgba(7, 7, 9, 0.78) 38%, rgba(7, 7, 9, 0.22) 68%, transparent 100%);
+      transition: padding .7s var(--ease);
+    }
+
+    .member-card:hover .member-info {
+      padding-bottom: clamp(22px, 4vw, 42px);
+    }
+
+    .member-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.2vw, 1.7rem);
+      font-weight: 400;
+      color: var(--gold-light);
+      letter-spacing: 1.5px;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .member-sep {
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-bottom: 7px;
+      transition: width .7s var(--ease);
+    }
+
+    .member-card:hover .member-sep {
+      width: 52px;
+    }
+
+    .member-role {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.48rem, 0.85vw, 0.6rem);
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: rgba(255, 255, 255, 0.46);
+      transition: color .5s;
+    }
+
+    .member-card:hover .member-role {
+      color: rgba(255, 255, 255, 0.68);
+    }
+
+    .card-ceo {
+      width: min(58%, 520px);
+      height: clamp(340px, 52vh, 640px);
+      flex-shrink: 0;
+    }
+
+    .card-mid {
+      height: clamp(280px, 40vh, 520px);
+    }
+
+    .card-solo {
+      width: min(88%, 400px);
+      height: clamp(320px, 44vh, 560px);
+    }
+
+    .ceo-quote {
+      flex: 1;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 1.9vw, 1.55rem);
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.52);
+      border-left: 1px solid var(--gold);
+      padding-left: clamp(22px, 4vw, 50px);
+      position: relative;
+      max-width: 400px;
+    }
+
+    .ceo-quote::before {
+      content: '"';
+      position: absolute;
+      top: -20px;
+      left: 8px;
+      font-size: 5rem;
+      color: var(--gold);
+      opacity: 0.07;
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+
+    .quote-attr {
+      display: block;
+      margin-top: 20px;
+      font-style: normal;
+      font-family: 'Cinzel', serif;
+      font-size: 0.52rem;
+      letter-spacing: 4px;
+      color: var(--gold);
+      opacity: .65;
+      text-transform: uppercase;
+    }
+
+    /* FOOTER */
+    footer {
+      position: relative;
+      z-index: 10;
+      padding: clamp(10px, 2vh, 20px) clamp(20px, 5vw, 60px);
+      border-top: 1px solid var(--border);
+      background: linear-gradient(0deg, rgba(7, 7, 9, 0.7), transparent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .foot-brand {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.6rem, 0.9vw, 0.72rem);
+      letter-spacing: 5px;
+      color: var(--gold);
+      opacity: 0.55;
+      text-transform: uppercase;
+    }
+
+    .foot-copy {
+      font-size: clamp(0.65rem, 1vw, 0.8rem);
+      letter-spacing: 3px;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+    }
+
+    .foot-links {
+      display: flex;
+      gap: 14px;
+    }
+
+    .foot-links a {
+      font-size: clamp(0.6rem, 0.9vw, 0.72rem);
+      letter-spacing: 3px;
+      color: rgba(255, 255, 255, 0.3);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .foot-links a:hover {
+      color: var(--gold);
+    }
+
+    @media (max-width:580px) {
+
+      .foot-brand,
+      .foot-links {
+        display: none;
+      }
+
+      footer {
+        justify-content: center;
+      }
+    }
+
+    /* CURSOR */
+    .cursor-orb {
+      position: fixed;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.04), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-9999px, -9999px);
+      opacity: 0;
+    }
+
+    @media(hover:hover) {
+      .cursor-orb {
+        opacity: 1;
+      }
+    }
+
+    /* CURTAIN */
+    .curtain {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 9000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+
+    .curtain.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    @media(min-width:1400px) {
+      .page-eyebrow {
+        font-size: 1.1rem;
+        letter-spacing: 14px;
+        margin-bottom: 24px;
+      }
+
+      .page-title {
+        font-size: 6.8rem;
+        letter-spacing: 32px;
+        margin-bottom: 48px;
+      }
+
+      .prule-line {
+        width: 140px;
+      }
+
+      .prule-dot {
+        font-size: 0.8rem;
+      }
+
+      .foot-copy {
+        font-size: 1.1rem;
+        letter-spacing: 5px;
+      }
+
+      .foot-brand,
+      .foot-links a {
+        font-size: 1rem;
+        letter-spacing: 6px;
+      }
+    }
+
+    @media(max-width:900px) {
+      .ceo-row {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card-ceo {
+        width: 100%;
+        max-width: 500px;
+      }
+
+      .ceo-quote {
+        border-left: none;
+        border-top: 1px solid var(--gold);
+        padding-left: 0;
+        padding-top: 22px;
+        text-align: center;
+        max-width: 100%;
+      }
+
+      .ceo-quote::before {
+        display: none;
+      }
+    }
+
+    @media(max-width:600px) {
+      .mid-row {
+        grid-template-columns: 1fr;
+      }
+
+      .card-mid {
+        height: clamp(260px, 38vh, 420px);
+      }
+
+      .team-section {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      footer {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="curtain" id="curtain"></div>
+  <div class="scan-line"></div>
+  <div class="cursor-orb" id="cursorOrb"></div>
+  <div class="ambient">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+  </div>
+  <div class="bg-word">KONINE</div>
+
+  <nav>
+    <a href="index.html" class="logo">
+      <img src="konine.jpg" alt="KONINE" id="logoImg">
+      <span class="logo-fallback">KONINE</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="team.html" class="active">Team</a>
+      <a href="contact.html">Contact</a>
+      <a href="services.html">Services</a>
+    </div>
+    <button class="hamburger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="team.html">Team</a>
+    <a href="contact.html">Contact</a>
+    <a href="services.html">Services</a>
+  </div>
+
+  <main>
+    <div class="page-header">
+      <p class="page-eyebrow">The People Behind The Vision</p>
+      <h1 class="page-title">The Collective</h1>
+      <div class="page-rule">
+        <span class="prule-line"></span>
+        <span class="prule-dot">✦</span>
+        <span class="prule-line r"></span>
+      </div>
+    </div>
+
+    <div class="team-section">
+      <!-- CEO -->
+      <div class="ceo-row">
+        <div class="member-card card-ceo">
+          <img src="ceo.png" alt="Sebastian Marko">
+          <div class="member-info">
+            <div class="member-name">Sebastian Marko</div>
+            <div class="member-sep"></div>
+            <div class="member-role">Chief Executive Officer</div>
+          </div>
+        </div>
+        <blockquote class="ceo-quote">
+          "Creating art is not about what you see, but what you make others see. At Konine, we define the next decade of
+          digital aesthetics."
+          <span class="quote-attr">— Sebastian Marko, CEO</span>
+        </blockquote>
+      </div>
+
+      <!-- COO + CTO -->
+      <div class="mid-row">
+        <div class="member-card card-mid">
+          <img src="coo.jpg" alt="Godfrey Mria" loading="lazy">
+          <div class="member-info">
+            <div class="member-name">Godfrey Mria</div>
+            <div class="member-sep"></div>
+            <div class="member-role">Chief Operations Officer</div>
+          </div>
+        </div>
+        <div class="member-card card-mid">
+          <img src="cto.jpg" alt="Nelson Richard" loading="lazy">
+          <div class="member-info">
+            <div class="member-name">Nelson Richard</div>
+            <div class="member-sep"></div>
+            <div class="member-role">Chief Technology Officer</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Creative Director -->
+      <div class="bottom-row">
+        <div class="member-card card-solo">
+          <img src="cd.png" alt="Hassan Almas" loading="lazy">
+          <div class="member-info">
+            <div class="member-name">Hassan Almas</div>
+            <div class="member-sep"></div>
+            <div class="member-role">Chief Creative Director</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span class="foot-brand">Konine</span>
+    <span class="foot-copy">© <span id="yr"></span> KONINE &nbsp;·&nbsp; Art &amp; Style Redefined</span>
+    <div class="foot-links">
+      <a href="https://instagram.com/konine_company" target="_blank" rel="noopener">IG</a>
+      <a href="https://facebook.com/konine" target="_blank" rel="noopener">FB</a>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+
+    /* CURSOR */
+    const orb = document.getElementById('cursorOrb');
+    let mx = -9999, my = -9999, cx = -9999, cy = -9999;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    (function tick() {
+      cx += (mx - cx) * 0.12; cy += (my - cy) * 0.12;
+      orb.style.transform = `translate(${cx - 140}px,${cy - 140}px)`;
+      requestAnimationFrame(tick);
+    })();
+
+    /* HAMBURGER */
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        burger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    /* PAGE TRANSITIONS */
+    const curtain = document.getElementById('curtain');
+    document.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', e => {
+        try {
+          const url = new URL(link.href, window.location.href);
+          if (url.hostname === window.location.hostname && !link.getAttribute('target')) {
+            e.preventDefault();
+            curtain.classList.add('show');
+            setTimeout(() => { window.location.href = link.href; }, 500);
+          }
+        } catch (err) { }
+      });
+    });
+
+    /* Footer year */
+    const yr = document.getElementById('yr');
+    if (yr) yr.textContent = new Date().getFullYear();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CONTACT | KONINE</title>
+  <link rel="icon" type="image/jpeg" href="konine.jpg">
+  <link rel="apple-touch-icon" href="konine.jpg">
+  <meta name="description" content="KONINE — Contact: Get in touch with us for art and style.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Cinzel:wght@400;600;700&family=Inter:wght@200;300;400&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070709;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-glow: rgba(201, 168, 76, 0.4);
+      --gold-dim: rgba(201, 168, 76, 0.12);
+      --border: rgba(255, 255, 255, 0.07);
+      --ease: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      background: var(--bg);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity 0.7s var(--ease);
+      overflow: hidden;
+    }
+
+    body.loaded {
+      opacity: 1;
+    }
+
+    /* ─── AMBIENT ─── */
+    .ambient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+    }
+
+    .orb-1 {
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.07), transparent 65%);
+      top: -20%;
+      left: -15%;
+      animation: driftA 20s ease-in-out infinite alternate;
+    }
+
+    .orb-2 {
+      width: 50vw;
+      height: 50vw;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.05), transparent 65%);
+      bottom: -15%;
+      right: -10%;
+      animation: driftB 24s ease-in-out infinite alternate;
+    }
+
+    @keyframes driftA {
+      to {
+        transform: translate(5vw, 4vh) scale(1.1);
+      }
+    }
+
+    @keyframes driftB {
+      to {
+        transform: translate(-4vw, -3vh) scale(1.08);
+      }
+    }
+
+    .scan-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold-light) 50%, var(--gold) 70%, transparent);
+      opacity: 0;
+      z-index: 1000;
+      transition: opacity 2s ease 0.6s;
+    }
+
+    body.loaded .scan-line {
+      opacity: 0.65;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 500;
+      height: clamp(64px, 9vh, 96px);
+      padding: 0 clamp(24px, 5.5vw, 80px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(180deg, rgba(7, 7, 9, 0.88) 0%, rgba(7, 7, 9, 0) 100%);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    @media (min-width: 1400px) {
+      nav {
+        padding: 42px 90px;
+        height: 110px;
+      }
+    }
+
+    .logo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: clamp(35px, 5vh, 55px);
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px var(--gold-glow));
+      transition: filter 0.4s;
+    }
+
+    .logo:hover img {
+      filter: drop-shadow(0 0 18px var(--gold-glow)) brightness(1.2);
+    }
+
+    .logo-fallback {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.1rem, 2.2vw, 1.7rem);
+      letter-spacing: 6px;
+      color: var(--gold);
+      display: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: clamp(28px, 4vw, 56px);
+    }
+
+    .nav-links a {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.6rem, 0.85vw, 0.75rem);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.4s;
+    }
+
+    @media (min-width: 1400px) {
+      .nav-links a {
+        font-size: 1.15rem;
+        letter-spacing: 6px;
+      }
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transition: width 0.7s var(--ease);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--gold-light);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 600;
+      background: none;
+      border: none;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--gold);
+      transition: 0.5s var(--ease);
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+      background: var(--gold);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+      background: var(--gold);
+    }
+
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(7, 7, 9, 0.97);
+      backdrop-filter: blur(24px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      z-index: 490;
+      transform: translateX(100%);
+      transition: transform 0.65s var(--ease);
+    }
+
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+
+    .mobile-menu a {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(2rem, 7vw, 3.5rem);
+      letter-spacing: 8px;
+      color: #fff;
+      text-decoration: none;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: color 0.3s, opacity 0.5s var(--ease), transform 0.5s var(--ease);
+    }
+
+    .mobile-menu.open a {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mobile-menu a:hover {
+      color: var(--gold);
+    }
+
+    @media (max-width:768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* ─── BG WORD ─── */
+    .bg-word {
+      position: fixed;
+      z-index: 0;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: clamp(22vw, 30vw, 38vw);
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.022);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      white-space: nowrap;
+      user-select: none;
+      letter-spacing: 0.1em;
+      animation: bgBreath 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgBreath {
+      from {
+        transform: translate(-50%, -50%) scale(0.97);
+      }
+
+      to {
+        transform: translate(-50%, -50%) scale(1.03);
+        letter-spacing: 0.15em;
+      }
+    }
+
+    /* ─── MAIN ─── */
+    main {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(80px, 12vh, 120px) 20px 40px;
+    }
+
+    /* CONTACT CARD */
+    .card-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      perspective: 1000px;
+    }
+
+    .contact-card {
+      background: rgba(255, 255, 255, 0.03);
+      padding: clamp(32px, 5vw, 60px);
+      border-radius: 12px;
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      width: 100%;
+      max-width: 480px;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+      animation: riseIn 1s var(--ease) 0.3s both;
+      transition: border-color 0.6s, box-shadow 0.6s, transform 0.1s linear;
+    }
+
+    .contact-card:hover {
+      border-color: rgba(201, 168, 76, 0.4);
+      box-shadow: 0 50px 120px rgba(0, 0, 0, 0.9), 0 0 40px rgba(201, 168, 76, 0.06);
+    }
+
+    .card-label {
+      display: block;
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 6px;
+      color: var(--gold);
+      margin-bottom: 18px;
+      font-weight: 600;
+      font-family: 'Cinzel', serif;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(2.8rem, 7vw, 4.5rem);
+      letter-spacing: clamp(8px, 2vw, 20px);
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 6px;
+      background: linear-gradient(120deg, #fff 0%, var(--gold-light) 50%, #fff 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 6s linear 1s infinite;
+    }
+
+    .card-title span {
+      color: var(--gold);
+      -webkit-text-fill-color: var(--gold);
+    }
+
+    @keyframes shimmer {
+      to {
+        background-position: 280% center;
+      }
+    }
+
+    .card-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+      letter-spacing: 4px;
+      color: rgba(255, 255, 255, 0.35);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin-bottom: 28px;
+      opacity: 0.3;
+    }
+
+    /* SOCIAL LINKS */
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .social-item {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      text-decoration: none;
+      color: #fff;
+      transition: 0.4s var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-item:last-child {
+      border-bottom: none;
+    }
+
+    .social-item::before {
+      content: '';
+      position: absolute;
+      left: -100%;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.04), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .social-item:hover::before {
+      left: 100%;
+    }
+
+    .social-item:hover {
+      transform: translateX(6px);
+    }
+
+    .social-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.4s var(--ease);
+    }
+
+    .social-item:hover .social-icon {
+      background: rgba(201, 168, 76, 0.1);
+      border-color: rgba(201, 168, 76, 0.3);
+      box-shadow: 0 0 16px rgba(201, 168, 76, 0.12);
+    }
+
+    .social-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: #fff;
+      transition: fill 0.3s;
+    }
+
+    .social-item:hover .social-icon svg {
+      fill: var(--gold);
+    }
+
+    .social-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .social-label {
+      font-size: 0.6rem;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      display: block;
+      margin-bottom: 3px;
+      font-family: 'Cinzel', serif;
+    }
+
+    .social-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      letter-spacing: 1px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: color 0.3s;
+    }
+
+    .social-item:hover .social-value {
+      color: var(--gold-light);
+    }
+
+    .social-arrow {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.2);
+      transition: transform 0.4s var(--ease), color 0.3s;
+      flex-shrink: 0;
+    }
+
+    .social-item:hover .social-arrow {
+      transform: translateX(5px);
+      color: var(--gold);
+    }
+
+    /* FOOTER */
+    footer {
+      position: relative;
+      z-index: 10;
+      padding: clamp(10px, 2vh, 20px) clamp(20px, 5vw, 60px);
+      border-top: 1px solid var(--border);
+      background: linear-gradient(0deg, rgba(7, 7, 9, 0.7), transparent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .foot-brand {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.6rem, 0.9vw, 0.72rem);
+      letter-spacing: 5px;
+      color: var(--gold);
+      opacity: 0.55;
+      text-transform: uppercase;
+    }
+
+    .foot-copy {
+      font-size: clamp(0.65rem, 1vw, 0.8rem);
+      letter-spacing: 3px;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+    }
+
+    .foot-links {
+      display: flex;
+      gap: 14px;
+    }
+
+    .foot-links a {
+      font-size: clamp(0.6rem, 0.9vw, 0.72rem);
+      letter-spacing: 3px;
+      color: rgba(255, 255, 255, 0.3);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .foot-links a:hover {
+      color: var(--gold);
+    }
+
+    @media (max-width:580px) {
+
+      .foot-brand,
+      .foot-links {
+        display: none;
+      }
+
+      footer {
+        justify-content: center;
+      }
+    }
+
+    /* CURSOR */
+    .cursor-orb {
+      position: fixed;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.04), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-9999px, -9999px);
+      opacity: 0;
+    }
+
+    @media(hover:hover) {
+      .cursor-orb {
+        opacity: 1;
+      }
+    }
+
+    /* CURTAIN */
+    .curtain {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 9000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+
+    .curtain.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    @media(min-width:1400px) {
+      .foot-copy {
+        font-size: 1.1rem;
+        letter-spacing: 5px;
+      }
+
+      .foot-brand,
+      .foot-links a {
+        font-size: 1rem;
+        letter-spacing: 6px;
+      }
+    }
+
+    @keyframes riseIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="curtain" id="curtain"></div>
+  <div class="scan-line"></div>
+  <div class="cursor-orb" id="cursorOrb"></div>
+  <div class="ambient">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+  </div>
+  <div class="bg-word">KONINE</div>
+
+  <nav>
+    <a href="index.html" class="logo">
+      <img src="konine.jpg" alt="KONINE" id="logoImg">
+      <span class="logo-fallback">KONINE</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="team.html">Team</a>
+      <a href="contact.html" class="active">Contact</a>
+      <a href="services.html">Services</a>
+    </div>
+    <button class="hamburger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="team.html">Team</a>
+    <a href="contact.html">Contact</a>
+    <a href="services.html">Services</a>
+  </div>
+
+  <main>
+    <div class="card-wrapper">
+      <div class="contact-card" id="floatCard">
+        <span class="card-label">Get In Touch</span>
+        <h1 class="card-title">KO<span>NI</span>NE</h1>
+        <p class="card-subtitle">Art &amp; Style Redefined</p>
+        <div class="divider"></div>
+
+        <div class="social-links">
+          <a href="mailto:info@konine.com" class="social-item">
+            <div class="social-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 2-8 5-8-5h16zm0 12H4V9l8 5 8-5v9z" />
+              </svg>
+            </div>
+            <div class="social-info">
+              <span class="social-label">Email</span>
+              <span class="social-value">info@konine.com</span>
+            </div>
+            <span class="social-arrow">→</span>
+          </a>
+
+          <a href="https://instagram.com/konine_company" target="_blank" rel="noopener" class="social-item">
+            <div class="social-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
+              </svg>
+            </div>
+            <div class="social-info">
+              <span class="social-label">Instagram</span>
+              <span class="social-value">@konine_company</span>
+            </div>
+            <span class="social-arrow">→</span>
+          </a>
+
+          <a href="https://facebook.com/konine" target="_blank" rel="noopener" class="social-item">
+            <div class="social-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.269h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
+              </svg>
+            </div>
+            <div class="social-info">
+              <span class="social-label">Facebook</span>
+              <span class="social-value">Konine Company</span>
+            </div>
+            <span class="social-arrow">→</span>
+          </a>
+
+          <a href="tel:+255616334055" class="social-item">
+            <div class="social-icon">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C9.61 21 3 14.39 3 6c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+              </svg>
+            </div>
+            <div class="social-info">
+              <span class="social-label">Call CEO</span>
+              <span class="social-value">+255 616 334 055</span>
+            </div>
+            <span class="social-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span class="foot-brand">Konine</span>
+    <span class="foot-copy">© <span id="yr"></span> KONINE &nbsp;·&nbsp; Art &amp; Style Redefined</span>
+    <div class="foot-links">
+      <a href="https://instagram.com/konine_company" target="_blank" rel="noopener">IG</a>
+      <a href="https://facebook.com/konine" target="_blank" rel="noopener">FB</a>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('load', () => document.body.classList.add('loaded'));
+
+    /* CURSOR */
+    const orb = document.getElementById('cursorOrb');
+    let mx = -9999, my = -9999, cx = -9999, cy = -9999;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    (function tick() {
+      cx += (mx - cx) * 0.12; cy += (my - cy) * 0.12;
+      orb.style.transform = `translate(${cx - 140}px,${cy - 140}px)`;
+      requestAnimationFrame(tick);
+    })();
+
+    /* HAMBURGER */
+    const burger = document.getElementById('burger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        burger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    /* PAGE TRANSITIONS */
+    const curtain = document.getElementById('curtain');
+    document.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', e => {
+        try {
+          const url = new URL(link.href, window.location.href);
+          if (url.hostname === window.location.hostname && !link.getAttribute('target')) {
+            e.preventDefault();
+            curtain.classList.add('show');
+            setTimeout(() => { window.location.href = link.href; }, 500);
+          }
+        } catch (err) { }
+      });
+    });
+
+    /* SCROLL-TO-MOVE CARD (desktop only) */
+    const card = document.getElementById('floatCard');
+    const SCROLL_RANGE = 120;
+    const LERP = 0.10;
+    let targetY = 0, currentY = 0;
+
+    function isBig() { return window.innerWidth >= 1024; }
+
+    window.addEventListener('wheel', e => {
+      if (!isBig()) return;
+      e.preventDefault();
+      targetY += e.deltaY * 0.35;
+      targetY = Math.max(-SCROLL_RANGE, Math.min(SCROLL_RANGE, targetY));
+    }, { passive: false });
+
+    let touchStartY = null;
+    window.addEventListener('touchstart', e => {
+      if (!isBig()) return;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    window.addEventListener('touchmove', e => {
+      if (!isBig() || touchStartY === null) return;
+      const delta = touchStartY - e.touches[0].clientY;
+      touchStartY = e.touches[0].clientY;
+      targetY += delta * 0.6;
+      targetY = Math.max(-SCROLL_RANGE, Math.min(SCROLL_RANGE, targetY));
+    }, { passive: true });
+
+    (function cardTick() {
+      currentY += (targetY - currentY) * LERP;
+      if (Math.abs(targetY - currentY) < 0.05) currentY = targetY;
+      card.style.transform = `translateY(${currentY.toFixed(2)}px)`;
+      requestAnimationFrame(cardTick);
+    })();
+
+    window.addEventListener('resize', () => {
+      if (!isBig()) { currentY = 0; targetY = 0; card.style.transform = 'translateY(0)'; }
+    });
+
+    /* Footer year */
+    const yr = document.getElementById('yr');
+    if (yr) yr.textContent = new Date().getFullYear();
+  </script>
+</body>
+
+</html>
